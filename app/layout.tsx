@@ -49,12 +49,15 @@ export default function RootLayout({
           <Navbar />
 
           {/* Main Content (Adjusted for Fixed Navbar Height) */}
-          <main className="min-h-screen ">
+          <main className="min-h-screen">
             {children}
           </main>
 
           {/* Footer */}
           <Footer />
+
+
+
 
         </ThemeProvider>
 
