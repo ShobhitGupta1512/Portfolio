@@ -31,7 +31,7 @@ const MarkdownComponents = {
     </h2>
   ),
   h3: ({ children }) => (
-    <h3 style={{ fontSize:"14px", fontWeight:600, color:"#c4b5fd", margin:"12px 0 6px", textTransform:"uppercase", letterSpacing:"0.06em", fontSize:"11px" }}>
+    <h3 style={{ fontSize:"11px", fontWeight:600, color:"#c4b5fd", margin:"12px 0 6px", textTransform:"uppercase", letterSpacing:"0.06em" }}>
       {children}
     </h3>
   ),
@@ -68,8 +68,6 @@ const MarkdownComponents = {
     <a
       href={href} target="_blank" rel="noopener noreferrer"
       style={{ color:"#60a5fa", textDecoration:"none", borderBottom:"1px solid rgba(96,165,250,0.4)", paddingBottom:"1px", transition:"all 0.2s" }}
-      onMouseEnter={(e) => { e.target.style.color="#93c5fd"; e.target.style.borderBottomColor="rgba(147,197,253,0.7)" }}
-      onMouseLeave={(e) => { e.target.style.color="#60a5fa"; e.target.style.borderBottomColor="rgba(96,165,250,0.4)" }}
     >
       {children}
     </a>
@@ -128,8 +126,17 @@ export function AIChatSection() {
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
   const [hasOpened, setHasOpened] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
+
+  /* ── Detect mobile ── */
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640)
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
 
   useEffect(() => {
     if (isOpen) {
@@ -236,6 +243,9 @@ export function AIChatSection() {
           color: #fff !important;
           transform: translateX(4px) !important;
         }
+        .suggest-btn:active {
+          transform: scale(0.97) !important;
+        }
         .send-btn:hover:not(:disabled) {
           transform: scale(1.08) !important;
           box-shadow: 0 6px 24px rgba(124,58,237,0.6) !important;
@@ -243,7 +253,7 @@ export function AIChatSection() {
       `}</style>
 
       {/* ══════════════════════════════════
-          PAGE SECTION — TEASER CARD
+          PAGE SECTION — TEASER CARD (unchanged)
       ══════════════════════════════════ */}
       <section className="py-28 px-6 relative overflow-hidden">
         <div style={{ position:"absolute", top:"20%", left:"10%", width:"400px", height:"400px", borderRadius:"50%", background:"radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%)", pointerEvents:"none", filter:"blur(40px)" }} />
@@ -265,7 +275,6 @@ export function AIChatSection() {
 
           <motion.div initial={{ opacity:0, y:50 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.9, delay:0.15 }}>
             <div style={{ borderRadius:"28px", border:"1px solid rgba(139,92,246,0.18)", background:"linear-gradient(145deg, rgba(15,10,30,0.8) 0%, rgba(17,24,39,0.8) 100%)", backdropFilter:"blur(20px)", overflow:"hidden", boxShadow:"0 0 0 1px rgba(255,255,255,0.04), 0 40px 80px rgba(0,0,0,0.3)" }}>
-              {/* macOS top bar */}
               <div style={{ padding:"14px 22px", borderBottom:"1px solid rgba(255,255,255,0.05)", background:"rgba(124,58,237,0.06)", display:"flex", alignItems:"center", gap:"8px" }}>
                 <div style={{ width:"10px", height:"10px", borderRadius:"50%", background:"#f87171" }} />
                 <div style={{ width:"10px", height:"10px", borderRadius:"50%", background:"#fbbf24" }} />
@@ -276,7 +285,6 @@ export function AIChatSection() {
               </div>
 
               <div style={{ padding:"48px 44px", display:"flex", gap:"56px", alignItems:"center" }}>
-                {/* Left */}
                 <div style={{ flex:1, minWidth:0 }}>
                   <div className="fab-float" style={{ display:"inline-flex", position:"relative", marginBottom:"32px" }}>
                     <div className="pulse-ring"   style={{ position:"absolute", inset:"-16px", borderRadius:"50%", border:"1px solid rgba(139,92,246,0.35)" }} />
@@ -305,7 +313,6 @@ export function AIChatSection() {
                   </button>
                 </div>
 
-                {/* Right — suggested */}
                 <div style={{ width:"260px", flexShrink:0, display:"flex", flexDirection:"column", gap:"10px" }}>
                   <p style={{ fontSize:"11px", color:"rgba(255,255,255,0.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:"4px" }}>Try asking</p>
                   {SUGGESTED.map((s, i) => (
@@ -335,7 +342,22 @@ export function AIChatSection() {
             transition={{ delay:1.2, type:"spring", stiffness:220 }}
             onClick={() => setIsOpen(true)}
             className="fab-float"
-            style={{ position:"fixed", bottom:"28px", right:"28px", zIndex:9998, width:"62px", height:"62px", borderRadius:"50%", background:"linear-gradient(135deg,#7c3aed,#4f46e5)", border:"none", cursor:"pointer", fontSize:"26px", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 8px 32px rgba(124,58,237,0.55)" }}
+            style={{
+              position:"fixed",
+              bottom: isMobile ? "84px" : "28px",  // above iOS nav bar
+              right:"24px",
+              zIndex:9998,
+              width: isMobile ? "56px" : "62px",
+              height: isMobile ? "56px" : "62px",
+              borderRadius:"50%",
+              background:"linear-gradient(135deg,#7c3aed,#4f46e5)",
+              border:"none",
+              cursor:"pointer",
+              fontSize:"24px",
+              color:"#fff",
+              display:"flex", alignItems:"center", justifyContent:"center",
+              boxShadow:"0 8px 32px rgba(124,58,237,0.55)",
+            }}
           >
             {!hasOpened && (
               <div style={{ position:"absolute", top:"3px", right:"3px", width:"13px", height:"13px", borderRadius:"50%", background:"#f43f5e", border:"2px solid #fff" }} />
@@ -346,25 +368,56 @@ export function AIChatSection() {
       </AnimatePresence>
 
       {/* ══════════════════════════════════
-          SIDE PANEL CHAT
+          CHAT PANEL
+          Desktop → slides in from RIGHT
+          Mobile  → slides up FULL SCREEN (native sheet feel)
       ══════════════════════════════════ */}
       <AnimatePresence>
         {isOpen && (
           <>
-            <motion.div key="backdrop" initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }} transition={{ duration:0.25 }}
+            {/* Backdrop */}
+            <motion.div
+              key="backdrop"
+              initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
+              transition={{ duration:0.25 }}
               onClick={() => setIsOpen(false)}
               style={{ position:"fixed", inset:0, zIndex:10000, background:"rgba(0,0,0,0.75)", backdropFilter:"blur(8px)" }}
             />
 
-            <motion.div key="panel"
-              initial={{ x:"100%", opacity:0 }} animate={{ x:0, opacity:1 }} exit={{ x:"100%", opacity:0 }}
+            {/* Panel */}
+            <motion.div
+              key="panel"
+              initial={isMobile ? { y:"100%", opacity:0 }   : { x:"100%", opacity:0 }}
+              animate={isMobile ? { y:0, opacity:1 }         : { x:0, opacity:1 }}
+              exit={isMobile    ? { y:"100%", opacity:0 }    : { x:"100%", opacity:0 }}
               transition={{ type:"spring", stiffness:300, damping:32 }}
-              style={{ position:"fixed", top:0, right:0, bottom:0, zIndex:10001, width:"min(580px, 100vw)", display:"flex", flexDirection:"column", background:"linear-gradient(180deg,#0b0b18 0%,#0d0f1c 100%)", borderLeft:"1px solid rgba(139,92,246,0.2)", boxShadow:"-20px 0 80px rgba(0,0,0,0.6)" }}
+              style={{
+                position:"fixed",
+                /* Mobile: full screen from top (incl. status bar) */
+                top:    isMobile ? 0 : 0,
+                right:  isMobile ? 0 : 0,
+                bottom: isMobile ? 0 : 0,
+                left:   isMobile ? 0 : "auto",
+                zIndex:10001,
+                width:  isMobile ? "100%" : "min(580px, 100vw)",
+                display:"flex",
+                flexDirection:"column",
+                background:"linear-gradient(180deg,#0b0b18 0%,#0d0f1c 100%)",
+                borderLeft: isMobile ? "none" : "1px solid rgba(139,92,246,0.2)",
+                boxShadow: isMobile ? "none" : "-20px 0 80px rgba(0,0,0,0.6)",
+              }}
             >
 
-              {/* Header */}
-              <div style={{ padding:"16px 20px", borderBottom:"1px solid rgba(255,255,255,0.06)", background:"rgba(124,58,237,0.07)", display:"flex", alignItems:"center", gap:"12px", flexShrink:0 }}>
-                <div style={{ width:"44px", height:"44px", borderRadius:"50%", background:"linear-gradient(135deg,#7c3aed,#4f46e5,#0ea5e9)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"22px", color:"#fff", flexShrink:0, boxShadow:"0 0 20px rgba(124,58,237,0.45)" }}>
+              {/* ── Header ── */}
+              <div style={{
+                padding:"16px 16px",
+                paddingTop: isMobile ? "calc(16px + env(safe-area-inset-top))" : "16px",
+                borderBottom:"1px solid rgba(255,255,255,0.06)",
+                background:"rgba(124,58,237,0.07)",
+                display:"flex", alignItems:"center", gap:"10px",
+                flexShrink:0,
+              }}>
+                <div style={{ width:"40px", height:"40px", borderRadius:"50%", background:"linear-gradient(135deg,#7c3aed,#4f46e5,#0ea5e9)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"20px", color:"#fff", flexShrink:0, boxShadow:"0 0 20px rgba(124,58,237,0.45)" }}>
                   <RiChatVoiceAiFill />
                 </div>
                 <div style={{ flex:1, minWidth:0 }}>
@@ -375,35 +428,66 @@ export function AIChatSection() {
                   </div>
                 </div>
                 {messages.length > 0 && (
-                  <button onClick={() => setMessages([])}
-                    style={{ padding:"5px 12px", borderRadius:"8px", fontSize:"11px", background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.08)", color:"rgba(255,255,255,0.4)", cursor:"pointer", transition:"all 0.2s" }}
+                  <button
+                    onClick={() => setMessages([])}
+                    style={{ padding:"6px 12px", borderRadius:"8px", fontSize:"12px", background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.08)", color:"rgba(255,255,255,0.45)", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap", minHeight:"36px" }}
                     onMouseEnter={(e) => { e.currentTarget.style.color="#fff"; e.currentTarget.style.background="rgba(255,255,255,0.1)" }}
-                    onMouseLeave={(e) => { e.currentTarget.style.color="rgba(255,255,255,0.4)"; e.currentTarget.style.background="rgba(255,255,255,0.05)" }}
+                    onMouseLeave={(e) => { e.currentTarget.style.color="rgba(255,255,255,0.45)"; e.currentTarget.style.background="rgba(255,255,255,0.05)" }}
                   >Clear</button>
                 )}
-                <button onClick={() => setIsOpen(false)}
-                  style={{ width:"34px", height:"34px", borderRadius:"10px", background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.09)", color:"rgba(255,255,255,0.5)", cursor:"pointer", fontSize:"16px", display:"flex", alignItems:"center", justifyContent:"center", transition:"all 0.2s" }}
+                {/* Close — bigger on mobile for easy tap */}
+                <button
+                  onClick={() => setIsOpen(false)}
+                  style={{ width: isMobile ? "40px" : "34px", height: isMobile ? "40px" : "34px", borderRadius:"10px", background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.09)", color:"rgba(255,255,255,0.5)", cursor:"pointer", fontSize:"16px", display:"flex", alignItems:"center", justifyContent:"center", transition:"all 0.2s", flexShrink:0 }}
                   onMouseEnter={(e) => { e.currentTarget.style.background="rgba(239,68,68,0.2)"; e.currentTarget.style.color="#f87171" }}
                   onMouseLeave={(e) => { e.currentTarget.style.background="rgba(255,255,255,0.06)"; e.currentTarget.style.color="rgba(255,255,255,0.5)" }}
                 >✕</button>
               </div>
 
-              {/* Messages */}
-              <div className="chat-scroll" style={{ flex:1, overflowY:"auto", padding:"24px 20px", display:"flex", flexDirection:"column", gap:"20px" }}>
-
+              {/* ── Messages ── */}
+              <div
+                className="chat-scroll"
+                style={{
+                  flex:1,
+                  overflowY:"auto",
+                  padding: isMobile ? "16px 12px" : "24px 20px",
+                  display:"flex",
+                  flexDirection:"column",
+                  gap: isMobile ? "14px" : "20px",
+                  WebkitOverflowScrolling:"touch", // smooth momentum scroll on iOS
+                }}
+              >
                 {/* Empty state */}
                 {messages.length === 0 && (
-                  <div style={{ textAlign:"center", padding:"16px 0 24px" }}>
-                    <div style={{ fontSize:"48px", marginBottom:"14px" }}>👋</div>
+                  <div style={{ textAlign:"center", padding:"8px 0 16px" }}>
+                    <div style={{ fontSize:"44px", marginBottom:"12px" }}>👋</div>
                     <h4 style={{ color:"#fff", fontSize:"17px", fontWeight:700, marginBottom:"8px" }}>Hi! I'm Shobhit's AI</h4>
-                    <p style={{ color:"rgba(255,255,255,0.38)", fontSize:"13.5px", marginBottom:"28px", lineHeight:"1.65" }}>
+                    <p style={{ color:"rgba(255,255,255,0.38)", fontSize: isMobile ? "14px" : "13.5px", marginBottom:"24px", lineHeight:"1.65" }}>
                       Ask me about skills, projects, availability,<br />or anything tech-related!
                     </p>
-                    <div style={{ display:"flex", flexDirection:"column", gap:"8px" }}>
+                    <div style={{ display:"flex", flexDirection:"column", gap: isMobile ? "10px" : "8px" }}>
                       {SUGGESTED.map((s) => (
-                        <button key={s.text} onClick={() => sendMessage(s.text)} className="suggest-btn"
-                          style={{ display:"flex", alignItems:"center", gap:"12px", padding:"13px 18px", borderRadius:"14px", border:"1px solid rgba(139,92,246,0.25)", background:"rgba(139,92,246,0.06)", color:"rgba(255,255,255,0.75)", fontSize:"13.5px", cursor:"pointer", textAlign:"left", width:"100%", transition:"all 0.2s" }}>
-                          <span style={{ fontSize:"19px", display:"flex", alignItems:"center" }}>{s.icon}</span>
+                        <button
+                          key={s.text}
+                          onClick={() => sendMessage(s.text)}
+                          className="suggest-btn"
+                          style={{
+                            display:"flex", alignItems:"center", gap:"12px",
+                            /* Bigger touch target on mobile — min 52px */
+                            padding: isMobile ? "14px 18px" : "13px 18px",
+                            minHeight: isMobile ? "52px" : "auto",
+                            borderRadius:"14px",
+                            border:"1px solid rgba(139,92,246,0.25)",
+                            background:"rgba(139,92,246,0.06)",
+                            color:"rgba(255,255,255,0.75)",
+                            fontSize: isMobile ? "14.5px" : "13.5px",
+                            cursor:"pointer",
+                            textAlign:"left",
+                            width:"100%",
+                            transition:"all 0.2s",
+                          }}
+                        >
+                          <span style={{ fontSize:"19px", display:"flex", alignItems:"center", flexShrink:0 }}>{s.icon}</span>
                           <span style={{ flex:1 }}>{s.text}</span>
                           <span style={{ opacity:0.35, fontSize:"15px" }}>→</span>
                         </button>
@@ -414,26 +498,66 @@ export function AIChatSection() {
 
                 {/* Message bubbles */}
                 {messages.map((msg, i) => (
-                  <div key={i} className="msg-pop" style={{ display:"flex", flexDirection:"column", alignItems: msg.role==="user" ? "flex-end" : "flex-start", gap:"5px" }}>
+                  <div
+                    key={i}
+                    className="msg-pop"
+                    style={{ display:"flex", flexDirection:"column", alignItems: msg.role==="user" ? "flex-end" : "flex-start", gap:"4px" }}
+                  >
                     <span style={{ fontSize:"10px", color:"rgba(255,255,255,0.25)", paddingLeft:"4px", paddingRight:"4px", letterSpacing:"0.06em", textTransform:"uppercase" }}>
                       {msg.role==="user" ? "You" : "Shobhit's AI"}
                     </span>
-                    <div style={{ display:"flex", alignItems:"flex-end", gap:"9px", flexDirection: msg.role==="user" ? "row-reverse" : "row", maxWidth:"92%" }}>
-                      {/* Avatar */}
-                      <div style={{ width:"30px", height:"30px", borderRadius:"50%", flexShrink:0, background: msg.role==="user" ? "rgba(255,255,255,0.1)" : "linear-gradient(135deg,#7c3aed,#4f46e5)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"14px", color:"#fff", border:"1px solid rgba(255,255,255,0.08)", alignSelf:"flex-end" }}>
+                    <div style={{
+                      display:"flex",
+                      alignItems:"flex-end",
+                      /* slightly tighter gap on mobile */
+                      gap: isMobile ? "7px" : "9px",
+                      flexDirection: msg.role==="user" ? "row-reverse" : "row",
+                      /* wider bubbles on mobile — more screen real estate used */
+                      maxWidth: isMobile ? "97%" : "92%",
+                    }}>
+                      {/* Avatar — smaller on mobile to save space */}
+                      <div style={{
+                        width: isMobile ? "26px" : "30px",
+                        height: isMobile ? "26px" : "30px",
+                        borderRadius:"50%",
+                        flexShrink:0,
+                        background: msg.role==="user" ? "rgba(255,255,255,0.1)" : "linear-gradient(135deg,#7c3aed,#4f46e5)",
+                        display:"flex", alignItems:"center", justifyContent:"center",
+                        fontSize: isMobile ? "12px" : "14px",
+                        color:"#fff",
+                        border:"1px solid rgba(255,255,255,0.08)",
+                        alignSelf:"flex-end",
+                      }}>
                         {msg.role==="user" ? "👤" : <RiChatVoiceAiFill />}
                       </div>
 
                       {/* Bubble */}
                       {msg.role==="user" ? (
-                        <div style={{ padding:"11px 16px", borderRadius:"18px 18px 4px 18px", background:"linear-gradient(135deg,#7c3aed,#4f46e5)", fontSize:"14px", lineHeight:"1.65", color:"#fff", boxShadow:"0 4px 20px rgba(124,58,237,0.35)" }}>
+                        <div style={{
+                          padding: isMobile ? "10px 14px" : "11px 16px",
+                          borderRadius:"18px 18px 4px 18px",
+                          background:"linear-gradient(135deg,#7c3aed,#4f46e5)",
+                          fontSize: isMobile ? "14.5px" : "14px",
+                          lineHeight:"1.65",
+                          color:"#fff",
+                          boxShadow:"0 4px 20px rgba(124,58,237,0.35)",
+                          wordBreak:"break-word",
+                        }}>
                           <p style={{ margin:0 }}>{msg.content}</p>
                         </div>
                       ) : (
-                        /* AI bubble — clean card layout */
-                        <div style={{ padding:"16px 20px", borderRadius:"4px 18px 18px 18px", background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.08)", backdropFilter:"blur(10px)", boxShadow:"0 4px 24px rgba(0,0,0,0.2)", maxWidth:"100%" }}>
-                          {/* AI label inside bubble */}
-                          <div style={{ display:"flex", alignItems:"center", gap:"6px", marginBottom:"12px", paddingBottom:"10px", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
+                        <div style={{
+                          padding: isMobile ? "14px 14px" : "16px 20px",
+                          borderRadius:"4px 18px 18px 18px",
+                          background:"rgba(255,255,255,0.03)",
+                          border:"1px solid rgba(255,255,255,0.08)",
+                          backdropFilter:"blur(10px)",
+                          boxShadow:"0 4px 24px rgba(0,0,0,0.2)",
+                          maxWidth:"100%",
+                          wordBreak:"break-word",
+                          overflowX:"hidden",
+                        }}>
+                          <div style={{ display:"flex", alignItems:"center", gap:"6px", marginBottom:"10px", paddingBottom:"8px", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
                             <div style={{ width:"5px", height:"5px", borderRadius:"50%", background:"#4ade80" }} />
                             <span style={{ fontSize:"10px", color:"rgba(255,255,255,0.3)", textTransform:"uppercase", letterSpacing:"0.08em", fontWeight:600 }}>AI Response</span>
                           </div>
@@ -448,8 +572,8 @@ export function AIChatSection() {
 
                 {/* Typing dots */}
                 {loading && (
-                  <div className="msg-pop" style={{ display:"flex", alignItems:"flex-end", gap:"9px" }}>
-                    <div style={{ width:"30px", height:"30px", borderRadius:"50%", background:"linear-gradient(135deg,#7c3aed,#4f46e5)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"14px", color:"#fff", border:"1px solid rgba(255,255,255,0.08)" }}>
+                  <div className="msg-pop" style={{ display:"flex", alignItems:"flex-end", gap: isMobile ? "7px" : "9px" }}>
+                    <div style={{ width: isMobile ? "26px" : "30px", height: isMobile ? "26px" : "30px", borderRadius:"50%", background:"linear-gradient(135deg,#7c3aed,#4f46e5)", display:"flex", alignItems:"center", justifyContent:"center", fontSize: isMobile ? "12px" : "14px", color:"#fff", border:"1px solid rgba(255,255,255,0.08)" }}>
                       <RiChatVoiceAiFill />
                     </div>
                     <div style={{ padding:"14px 18px", borderRadius:"4px 18px 18px 18px", background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.08)", display:"flex", gap:"5px", alignItems:"center" }}>
@@ -463,12 +587,23 @@ export function AIChatSection() {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Input */}
-              <div style={{ flexShrink:0, borderTop:"1px solid rgba(255,255,255,0.06)", background:"rgba(0,0,0,0.25)", padding:"16px 20px 22px" }}>
-                <div style={{ display:"flex", justifyContent:"space-between", marginBottom:"10px" }}>
-                  <span style={{ fontSize:"11px", color:"rgba(255,255,255,0.18)" }}>Enter to send · Shift+Enter for new line</span>
-                  <span style={{ fontSize:"11px", color: input.length > 450 ? "#f87171" : "rgba(255,255,255,0.18)" }}>{input.length}/500</span>
-                </div>
+              {/* ── Input Area ── */}
+              <div style={{
+                flexShrink:0,
+                borderTop:"1px solid rgba(255,255,255,0.06)",
+                background:"rgba(0,0,0,0.25)",
+                padding: isMobile ? "12px 12px" : "16px 20px 22px",
+                /* Respect iPhone home bar */
+                paddingBottom: isMobile ? "calc(12px + env(safe-area-inset-bottom))" : "22px",
+              }}>
+                {/* Hint row — hide on mobile to save vertical space */}
+                {!isMobile && (
+                  <div style={{ display:"flex", justifyContent:"space-between", marginBottom:"10px" }}>
+                    <span style={{ fontSize:"11px", color:"rgba(255,255,255,0.18)" }}>Enter to send · Shift+Enter for new line</span>
+                    <span style={{ fontSize:"11px", color: input.length > 450 ? "#f87171" : "rgba(255,255,255,0.18)" }}>{input.length}/500</span>
+                  </div>
+                )}
+
                 <div style={{ display:"flex", gap:"10px", alignItems:"flex-end" }}>
                   <textarea
                     ref={inputRef}
@@ -478,16 +613,53 @@ export function AIChatSection() {
                     placeholder="Ask about skills, projects, tech..."
                     rows={2}
                     className="input-glow"
-                    style={{ flex:1, background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:"14px", padding:"12px 16px", color:"rgba(255,255,255,0.9)", fontSize:"14px", outline:"none", resize:"none", lineHeight:"1.6", fontFamily:"inherit", transition:"all 0.2s" }}
+                    style={{
+                      flex:1,
+                      background:"rgba(255,255,255,0.05)",
+                      border:"1px solid rgba(255,255,255,0.1)",
+                      borderRadius:"14px",
+                      padding: isMobile ? "13px 14px" : "12px 16px",
+                      color:"rgba(255,255,255,0.9)",
+                      /* 16px prevents iOS auto-zoom on focus */
+                      fontSize: isMobile ? "16px" : "14px",
+                      outline:"none",
+                      resize:"none",
+                      lineHeight:"1.6",
+                      fontFamily:"inherit",
+                      transition:"all 0.2s",
+                    }}
                   />
+                  {/* Send button — bigger on mobile */}
                   <button
                     onClick={() => sendMessage()}
                     disabled={loading || !input.trim()}
                     className="send-btn"
-                    style={{ width:"48px", height:"48px", borderRadius:"14px", flexShrink:0, background: !loading && input.trim() ? "linear-gradient(135deg,#7c3aed,#4f46e5)" : "rgba(255,255,255,0.05)", border: !loading && input.trim() ? "none" : "1px solid rgba(255,255,255,0.08)", cursor: !loading && input.trim() ? "pointer" : "not-allowed", color: !loading && input.trim() ? "#fff" : "rgba(255,255,255,0.2)", fontSize:"20px", display:"flex", alignItems:"center", justifyContent:"center", transition:"all 0.2s", boxShadow: !loading && input.trim() ? "0 4px 20px rgba(124,58,237,0.45)" : "none" }}
+                    style={{
+                      width: isMobile ? "52px" : "48px",
+                      height: isMobile ? "52px" : "48px",
+                      borderRadius:"14px",
+                      flexShrink:0,
+                      background: !loading && input.trim() ? "linear-gradient(135deg,#7c3aed,#4f46e5)" : "rgba(255,255,255,0.05)",
+                      border: !loading && input.trim() ? "none" : "1px solid rgba(255,255,255,0.08)",
+                      cursor: !loading && input.trim() ? "pointer" : "not-allowed",
+                      color: !loading && input.trim() ? "#fff" : "rgba(255,255,255,0.2)",
+                      fontSize: isMobile ? "22px" : "20px",
+                      display:"flex", alignItems:"center", justifyContent:"center",
+                      transition:"all 0.2s",
+                      boxShadow: !loading && input.trim() ? "0 4px 20px rgba(124,58,237,0.45)" : "none",
+                    }}
                   >↑</button>
                 </div>
-                <p style={{ fontSize:"11px", color:"rgba(255,255,255,0.15)", textAlign:"center", marginTop:"12px" }}>
+
+                {/* Compact counter + hint on mobile — below the input row */}
+                {isMobile && (
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginTop:"8px" }}>
+                    <span style={{ fontSize:"11px", color:"rgba(255,255,255,0.2)" }}>Tap ↑ to send</span>
+                    <span style={{ fontSize:"11px", color: input.length > 450 ? "#f87171" : "rgba(255,255,255,0.2)" }}>{input.length}/500</span>
+                  </div>
+                )}
+
+                <p style={{ fontSize:"11px", color:"rgba(255,255,255,0.15)", textAlign:"center", marginTop: isMobile ? "8px" : "12px" }}>
                   AI responses based on Shobhit's real portfolio data
                 </p>
               </div>

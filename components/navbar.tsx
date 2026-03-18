@@ -43,7 +43,7 @@ export function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+          className="text-lg font-bold bg-gradient from-primary to-accent bg-clip-text text-transparent"
         >
           SK
         </Link>

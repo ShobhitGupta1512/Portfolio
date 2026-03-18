@@ -56,6 +56,7 @@ export const projects = [
   },
 ]
 
+
 export const aiProjects = [
   {
     id: 1,
