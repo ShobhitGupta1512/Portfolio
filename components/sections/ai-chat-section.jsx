@@ -269,7 +269,7 @@ export function AIChatSection() {
               <span className="shimmer-text">Ask Me Anything</span>
             </h2>
             <p className="text-foreground/50 text-lg max-w-xl mx-auto leading-relaxed">
-              My personal AI assistant knows everything about my journey — built to impress recruiters and help fellow developers.
+             My Personal AI Assistant — built to impress recruiters, empower developers, and turn my journey into intelligence.
             </p>
           </motion.div>
 
@@ -298,7 +298,7 @@ export function AIChatSection() {
                     Instantly learn about my skills, projects, availability, and more — no waiting, no forms.
                   </p>
                   <div style={{ display:"flex", gap:"28px", marginBottom:"36px" }}>
-                    {[["50+","LeetCode"],["5+","Hackathons"],["MERN","Stack"]].map(([val,label]) => (
+                    {[["100+","LeetCode"],["7+","Hackathons"],["MERN","Stack"]].map(([val,label]) => (
                       <div key={label}>
                         <div style={{ fontSize:"22px", fontWeight:800, color:"#a78bfa" }}>{val}</div>
                         <div style={{ fontSize:"10px", color:"rgba(255,255,255,0.35)", textTransform:"uppercase", letterSpacing:"0.08em" }}>{label}</div>
