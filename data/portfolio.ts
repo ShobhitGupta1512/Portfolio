@@ -113,13 +113,20 @@ export const experience = [
   },
 ]
 
+
 export const techStackMarquee = [
-  { name: "React", color: "text-blue-400" },
+  { name: "JavaScript", color: "text-yellow-400" },
+  { name: "React.js", color: "text-blue-400" },
   { name: "Next.js", color: "text-foreground" },
-  { name: "Node.js", color: "text-green-600" },
+  { name: "Node.js", color: "text-green-500" },
+  { name: "Express.js", color: "text-foreground" },
   { name: "MongoDB", color: "text-green-500" },
-  { name: "Express", color: "text-foreground" },
-  { name: "Tailwind", color: "text-cyan-400" },
+  { name: "MySQL", color: "text-blue-400" },
+  { name: "Tailwind CSS", color: "text-cyan-400" },
   { name: "Python", color: "text-yellow-500" },
-  { name: "OpenAI", color: "text-foreground" },
-]
+  { name: "Hugging Face", color: "text-yellow-400" },
+  { name: "REST APIs", color: "text-purple-400" },
+  { name: "Git", color: "text-orange-500" },
+  { name: "GitHub", color: "text-foreground" },
+  { name: "Postman", color: "text-orange-400" },
+];
