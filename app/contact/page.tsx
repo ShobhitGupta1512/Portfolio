@@ -45,21 +45,39 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Form validation using basic checks
-    // TODO: Add Zod validation when integrating backend
-    // TODO: Integrate email sending via Nodemailer or Resend API route
-
     if (!formData.fullName || !formData.email || !formData.message) {
       alert("Please fill in all fields")
       return
     }
 
-    // Simulate form submission
-    setIsSubmitted(true)
-    setTimeout(() => {
+    try {
+      setIsSubmitted(true)
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        alert(`Error: ${data.error || "Failed to send email"}`)
+        setIsSubmitted(false)
+        return
+      }
+
+      alert("Message sent successfully! I'll get back to you soon.")
       setFormData({ fullName: "", email: "", message: "" })
+      setTimeout(() => {
+        setIsSubmitted(false)
+      }, 2000)
+    } catch (error) {
+      alert("Failed to send message. Please try again.")
+      console.error("Contact form error:", error)
       setIsSubmitted(false)
-    }, 3000)
+    }
   }
 
   return (
@@ -142,19 +160,7 @@ export default function ContactPage() {
                   <ArrowRight className={`ml-2 h-5 w-5 transition-transform ${isSubmitted ? "text-green-400" : ""}`} />
                 </Button>
 
-                {/* Form Integration Notes */}
-                <div className="text-xs text-foreground/50 p-3 bg-secondary/30 rounded-lg">
-                  <p className="font-semibold mb-1">Backend Integration Instructions:</p>
-                  <p>
-                    1. Create API route:{" "}
-                    <code className="bg-black/30 px-1 py-0.5 rounded">app/api/contact/route.ts</code>
-                  </p>
-                  <p>
-                    2. Install dependencies:{" "}
-                    <code className="bg-black/30 px-1 py-0.5 rounded">npm i zod nodemailer</code>
-                  </p>
-                  <p>3. Validate with Zod schema and send via Nodemailer or Resend</p>
-                </div>
+
               </form>
             </Card>
           </motion.div>

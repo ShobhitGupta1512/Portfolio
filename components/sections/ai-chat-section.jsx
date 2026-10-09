@@ -172,7 +172,9 @@ export function AIChatSection() {
       const data = await res.json()
       setMessages((prev) => [...prev, {
         role: "assistant",
-        content: data.message || "Something went wrong.",
+        content: res.ok
+          ? data.message || "The assistant returned an empty response. Please try again."
+          : data.error || "The assistant could not respond. Please try again.",
       }])
     } catch {
       setMessages((prev) => [...prev, {
@@ -424,7 +426,7 @@ export function AIChatSection() {
                   <div style={{ color:"#fff", fontWeight:700, fontSize:"15px" }}>Shobhit's AI Assistant</div>
                   <div style={{ display:"flex", alignItems:"center", gap:"5px" }}>
                     <div style={{ width:"6px", height:"6px", borderRadius:"50%", background:"#4ade80" }} />
-                    <span style={{ color:"rgba(255,255,255,0.38)", fontSize:"11px" }}>Online · Groq + LLaMA 3.1</span>
+                    <span style={{ color:"rgba(255,255,255,0.38)", fontSize:"11px" }}>Online ·</span>
                   </div>
                 </div>
                 {messages.length > 0 && (
