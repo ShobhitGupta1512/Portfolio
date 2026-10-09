@@ -25,7 +25,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: "easeOut" },
+    transition: { duration: 0.8, ease: "easeOut" as const },
   },
 }
 
@@ -175,14 +175,14 @@ export default function ContactPage() {
                   scale: [1, 1.1, 1],
                 }}
                 transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                className="absolute inset-0 bg-gradient-to-br from-accent/40 via-primary/20 to-transparent"
+                className="absolute inset-0 bg-linear-to-br from-accent/40 via-primary/20 to-transparent"
               />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="text-6xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
+                  <div className="text-6xl font-bold bg-linear-to-r from-accent to-primary bg-clip-text text-transparent">
                     Let&apos;s
                   </div>
-                  <div className="text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  <div className="text-5xl font-bold bg-linear-to-r from-primary to-accent bg-clip-text text-transparent">
                     Build
                   </div>
                 </div>
@@ -207,13 +207,21 @@ export default function ContactPage() {
             <div className="space-y-3">
               <p className="font-semibold text-lg">Connect on social</p>
               <div className="grid grid-cols-2 gap-2">
-                <Link href="https://github.com" target="_blank">
+                <Link
+                  href="https://github.com/ShobhitGupta1512/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Button variant="outline" className="w-full bg-transparent">
                     <Github className="mr-2 h-5 w-5" />
                     GitHub
                   </Button>
                 </Link>
-                <Link href="https://linkedin.com" target="_blank">
+                <Link
+                  href="https://www.linkedin.com/in/shobhitkumar-webdev/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Button variant="outline" className="w-full bg-transparent">
                     <Linkedin className="mr-2 h-5 w-5" />
                     LinkedIn
