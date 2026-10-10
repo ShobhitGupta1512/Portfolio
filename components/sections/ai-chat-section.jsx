@@ -126,14 +126,13 @@ export function AIChatSection() {
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
   const [hasOpened, setHasOpened] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(() => (typeof window !== "undefined" ? window.innerWidth < 640 : false))
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
 
   /* ── Detect mobile ── */
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 640)
-    check()
     window.addEventListener("resize", check)
     return () => window.removeEventListener("resize", check)
   }, [])
@@ -141,7 +140,6 @@ export function AIChatSection() {
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 300)
-      setHasOpened(true)
       document.body.style.overflow = "hidden"
     } else {
       document.body.style.overflow = ""
@@ -307,7 +305,7 @@ export function AIChatSection() {
                       </div>
                     ))}
                   </div>
-                  <button onClick={() => setIsOpen(true)} style={{ display:"inline-flex", alignItems:"center", gap:"10px", padding:"14px 28px", borderRadius:"14px", background:"linear-gradient(135deg,#7c3aed,#4f46e5)", color:"#fff", fontWeight:700, fontSize:"15px", border:"none", cursor:"pointer", transition:"all 0.25s", boxShadow:"0 8px 30px rgba(124,58,237,0.4)" }}
+                  <button onClick={() => { setIsOpen(true); setHasOpened(true) }} style={{ display:"inline-flex", alignItems:"center", gap:"10px", padding:"14px 28px", borderRadius:"14px", background:"linear-gradient(135deg,#7c3aed,#4f46e5)", color:"#fff", fontWeight:700, fontSize:"15px", border:"none", cursor:"pointer", transition:"all 0.25s", boxShadow:"0 8px 30px rgba(124,58,237,0.4)" }}
                     onMouseEnter={(e) => { e.currentTarget.style.transform="translateY(-2px)"; e.currentTarget.style.boxShadow="0 14px 40px rgba(124,58,237,0.55)" }}
                     onMouseLeave={(e) => { e.currentTarget.style.transform="translateY(0)"; e.currentTarget.style.boxShadow="0 8px 30px rgba(124,58,237,0.4)" }}>
                     <span>Start Chatting</span>
@@ -319,7 +317,7 @@ export function AIChatSection() {
                   <p style={{ fontSize:"11px", color:"rgba(255,255,255,0.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:"4px" }}>Try asking</p>
                   {SUGGESTED.map((s, i) => (
                     <motion.button key={s.text} initial={{ opacity:0, x:30 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }} transition={{ delay:0.3+i*0.1 }}
-                      onClick={() => { setIsOpen(true); setTimeout(() => sendMessage(s.text), 450) }}
+                      onClick={() => { setIsOpen(true); setHasOpened(true); setTimeout(() => sendMessage(s.text), 450) }}
                       className="suggest-btn"
                       style={{ display:"flex", alignItems:"center", gap:"10px", padding:"12px 16px", borderRadius:"14px", border:"1px solid rgba(139,92,246,0.22)", background:"rgba(139,92,246,0.06)", color:"rgba(255,255,255,0.7)", fontSize:"13px", cursor:"pointer", textAlign:"left", transition:"all 0.2s", width:"100%" }}>
                       <span style={{ fontSize:"17px", display:"flex", alignItems:"center" }}>{s.icon}</span>
@@ -342,7 +340,7 @@ export function AIChatSection() {
           <motion.button
             initial={{ scale:0, opacity:0 }} animate={{ scale:1, opacity:1 }} exit={{ scale:0, opacity:0 }}
             transition={{ delay:1.2, type:"spring", stiffness:220 }}
-            onClick={() => setIsOpen(true)}
+            onClick={() => { setIsOpen(true); setHasOpened(true) }}
             className="fab-float"
             style={{
               position:"fixed",
@@ -423,7 +421,7 @@ export function AIChatSection() {
                   <RiChatVoiceAiFill />
                 </div>
                 <div style={{ flex:1, minWidth:0 }}>
-                  <div style={{ color:"#fff", fontWeight:700, fontSize:"15px" }}>Shobhit's AI Assistant</div>
+                  <div style={{ color:"#fff", fontWeight:700, fontSize:"15px" }}>Shobhit&apos;s AI Assistant</div>
                   <div style={{ display:"flex", alignItems:"center", gap:"5px" }}>
                     <div style={{ width:"6px", height:"6px", borderRadius:"50%", background:"#4ade80" }} />
                     <span style={{ color:"rgba(255,255,255,0.38)", fontSize:"11px" }}>Online ·</span>
@@ -463,7 +461,7 @@ export function AIChatSection() {
                 {messages.length === 0 && (
                   <div style={{ textAlign:"center", padding:"8px 0 16px" }}>
                     <div style={{ fontSize:"44px", marginBottom:"12px" }}>👋</div>
-                    <h4 style={{ color:"#fff", fontSize:"17px", fontWeight:700, marginBottom:"8px" }}>Hi! I'm Shobhit's AI</h4>
+                    <h4 style={{ color:"#fff", fontSize:"17px", fontWeight:700, marginBottom:"8px" }}>Hi! I&apos;m Shobhit&apos;s AI</h4>
                     <p style={{ color:"rgba(255,255,255,0.38)", fontSize: isMobile ? "14px" : "13.5px", marginBottom:"24px", lineHeight:"1.65" }}>
                       Ask me about skills, projects, availability,<br />or anything tech-related!
                     </p>
@@ -506,7 +504,7 @@ export function AIChatSection() {
                     style={{ display:"flex", flexDirection:"column", alignItems: msg.role==="user" ? "flex-end" : "flex-start", gap:"4px" }}
                   >
                     <span style={{ fontSize:"10px", color:"rgba(255,255,255,0.25)", paddingLeft:"4px", paddingRight:"4px", letterSpacing:"0.06em", textTransform:"uppercase" }}>
-                      {msg.role==="user" ? "You" : "Shobhit's AI"}
+                      {msg.role==="user" ? "You" : "Shobhit&apos;s AI"}
                     </span>
                     <div style={{
                       display:"flex",
@@ -662,7 +660,7 @@ export function AIChatSection() {
                 )}
 
                 <p style={{ fontSize:"11px", color:"rgba(255,255,255,0.15)", textAlign:"center", marginTop: isMobile ? "8px" : "12px" }}>
-                  AI responses based on Shobhit's real portfolio data
+                  AI responses based on Shobhit&apos;s real portfolio data
                 </p>
               </div>
             </motion.div>

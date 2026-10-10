@@ -6,12 +6,12 @@ import { techStackMarquee } from "@/data/portfolio"
 export function TechStackMarquee() {
   const marqueeVariants = {
     animate: {
-      x: [0, -1000],
+      x: [0, -1000] as number[],
       transition: {
         duration: 20,
         repeat: Number.POSITIVE_INFINITY,
         repeatType: "loop" as const,
-        ease: "linear",
+        ease: "linear" as const,
       },
     },
   }

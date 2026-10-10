@@ -1,58 +1,60 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion";
 
+/**
+ * Lightweight ambient decoration for a section with `relative isolate`.
+ * Use this as an optional layer, not as a replacement for the shared page
+ * background. The Projects-style grid and main glows should remain on the page.
+ */
 export function FloatingShapes() {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+    >
       <motion.div
-        animate={{
-          y: [0, -100, 0],
-          x: [0, 50, 0],
-          opacity: [0.3, 0.6, 0.3],
-          scale: [1, 1.1, 1],
-        }}
-        transition={{
-          duration: 18,
-          repeat: Infinity,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        className="absolute top-1/4 left-10 w-32 h-32 rounded-full bg-accent/10 blur-3xl"
-      />
-
-      <motion.div
-        animate={{
-          y: [0, 100, 0],
-          x: [0, -50, 0],
-          opacity: [0.2, 0.5, 0.2],
-          scale: [1, 1.08, 1],
-        }}
+        initial={false}
+        animate={
+          reduceMotion
+            ? { opacity: 0.18 }
+            : {
+                y: [0, -28, 0],
+                x: [0, 14, 0],
+                opacity: [0.14, 0.24, 0.14],
+                scale: [1, 1.035, 1],
+              }
+        }
         transition={{
           duration: 22,
-          repeat: Infinity,
-          ease: [0.22, 1, 0.36, 1],
-          delay: 2,
+          repeat: reduceMotion ? 0 : Infinity,
+          ease: "easeInOut",
         }}
-        className="absolute bottom-1/4 right-10 w-40 h-40 rounded-full bg-primary/10 blur-3xl"
+        className="absolute left-[6%] top-[18%] h-36 w-36 rounded-full bg-violet-500/10 blur-3xl sm:h-52 sm:w-52"
       />
 
       <motion.div
-        animate={{
-          y: [0, -60, 0],
-          x: [0, 30, 0],
-          opacity: [0.15, 0.4, 0.15],
-          scale: [1, 1.05, 1],
-        }}
+        initial={false}
+        animate={
+          reduceMotion
+            ? { opacity: 0.12 }
+            : {
+                y: [0, 24, 0],
+                x: [0, -14, 0],
+                opacity: [0.09, 0.18, 0.09],
+                scale: [1, 1.04, 1],
+              }
+        }
         transition={{
-          duration: 24,
-          repeat: Infinity,
+          duration: 26,
+          repeat: reduceMotion ? 0 : Infinity,
           ease: "easeInOut",
-          delay: 4,
+          delay: 1.5,
         }}
-        className="absolute top-1/2 left-1/2 w-24 h-24 rounded-full bg-violet-500/10 blur-2xl"
+        className="absolute bottom-[12%] right-[6%] h-40 w-40 rounded-full bg-cyan-500/[0.07] blur-3xl sm:h-56 sm:w-56"
       />
-
     </div>
-  )
+  );
 }

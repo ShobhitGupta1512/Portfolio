@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { Moon, Sun, Github, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -19,18 +19,15 @@ const navItems = [
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const { resolvedTheme, setTheme } = useTheme()
   const pathname = usePathname()
 
+  const handleScroll = () => setIsScrolled(window.scrollY > 10)
+
   useEffect(() => {
-    setMounted(true)
-    const handleScroll = () => setIsScrolled(window.scrollY > 10)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
-
-  if (!mounted) return null
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/"
@@ -80,15 +77,13 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
               className="hover:bg-primary/10 h-9 w-9 rounded-md transition-colors"
-              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              title="Toggle color theme"
+              aria-label="Toggle color theme"
             >
-              {theme === "dark" ? (
-                <Sun className="h-5 w-5" />
-              ) : (
-                <Moon className="h-5 w-5" />
-              )}
+              <Sun className="hidden h-5 w-5 dark:block" />
+              <Moon className="h-5 w-5 dark:hidden" />
             </Button>
 
             <Link
