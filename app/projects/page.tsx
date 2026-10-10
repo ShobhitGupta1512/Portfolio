@@ -101,16 +101,17 @@ const projects: Project[] = [
   },
   {
     id: "zetpro",
-    number: "05",
+    number: "09",
     title: "ZETPRO",
-    tagline: "A cleaner way to explore electronics.",
+    tagline: "A modern electronics shopping experience.",
     description:
-      "A responsive electronics shopping experience with product categories and a modern interface.",
-    tech: ["React", "JavaScript", "Tailwind CSS"],
+      "An electronics e-commerce website featuring product browsing, category filtering, and a responsive shopping interface.",
+    tech: ["React", "Tailwind CSS", "JavaScript", "REST API"],
     github: "https://github.com/ShobhitGupta1512/Zetpro",
+    liveDemo: "https://zetpro.vercel.app/",
     kind: "commerce",
-    accent: "from-blue-500/25 via-violet-500/10 to-slate-950",
-    label: "E-COMMERCE EXPERIENCE",
+    accent: "from-cyan-500/25 via-blue-500/10 to-slate-950",
+    label: "E-COMMERCE",
   },
   {
     id: "interior-ai",
@@ -211,16 +212,24 @@ function ProjectVisual({ project }: { project: Project }) {
             {project.title}
           </span>
         </div>
-        <span className="font-mono text-xs text-white/40">/{project.number}</span>
+        <span className="font-mono text-xs text-white/40">
+          /{project.number}
+        </span>
       </div>
 
       {project.kind === "pipeline" ? (
         <div className="relative mt-7 flex items-center justify-center gap-2 text-[10px] font-medium text-white/85">
-          <span className="rounded-lg border border-emerald-300/30 bg-emerald-300/10 px-3 py-2">Start</span>
+          <span className="rounded-lg border border-emerald-300/30 bg-emerald-300/10 px-3 py-2">
+            Start
+          </span>
           <ArrowRight className="h-3 w-3 text-white/50" />
-          <span className="rounded-lg border border-cyan-300/30 bg-cyan-300/10 px-3 py-2">Process</span>
+          <span className="rounded-lg border border-cyan-300/30 bg-cyan-300/10 px-3 py-2">
+            Process
+          </span>
           <ArrowRight className="h-3 w-3 text-white/50" />
-          <span className="rounded-lg border border-violet-300/30 bg-violet-300/10 px-3 py-2">Validate</span>
+          <span className="rounded-lg border border-violet-300/30 bg-violet-300/10 px-3 py-2">
+            Validate
+          </span>
           <div className="absolute -bottom-8 left-[18%] h-5 w-px bg-white/20" />
           <div className="absolute -bottom-8 left-1/2 h-5 w-px bg-white/20" />
           <div className="absolute -bottom-8 right-[18%] h-5 w-px bg-white/20" />
@@ -228,7 +237,10 @@ function ProjectVisual({ project }: { project: Project }) {
       ) : project.kind === "resume" || project.kind === "classroom" ? (
         <div className="relative mt-6 grid grid-cols-3 gap-2">
           {[0, 1, 2].map((item) => (
-            <div key={item} className="rounded-xl border border-white/10 bg-white/[0.07] p-3">
+            <div
+              key={item}
+              className="rounded-xl border border-white/10 bg-white/[0.07] p-3"
+            >
               <div className="mb-3 h-2 w-2/3 rounded-full bg-white/30" />
               <div className="mb-2 h-7 rounded-md bg-white/[0.08]" />
               <div className="h-1.5 w-full rounded-full bg-white/10" />
@@ -236,7 +248,9 @@ function ProjectVisual({ project }: { project: Project }) {
             </div>
           ))}
         </div>
-      ) : project.kind === "commerce" || project.kind === "interior" || project.kind === "travel" ? (
+      ) : project.kind === "commerce" ||
+        project.kind === "interior" ||
+        project.kind === "travel" ? (
         <div className="relative mt-6 grid grid-cols-3 gap-2">
           {[0, 1, 2].map((item) => (
             <div
@@ -304,7 +318,10 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       initial={reduceMotion ? false : { opacity: 0, y: 18 }}
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.12 }}
-      transition={{ duration: 0.42, delay: reduceMotion ? 0 : (index % 3) * 0.07 }}
+      transition={{
+        duration: 0.42,
+        delay: reduceMotion ? 0 : (index % 3) * 0.07,
+      }}
       className="group flex h-full flex-col rounded-[26px] border border-slate-200/80 bg-white/85 p-3.5 shadow-[0_12px_40px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.10)] dark:border-white/[0.09] dark:bg-white/[0.025] dark:shadow-[0_12px_40px_rgba(0,0,0,0.12)] dark:hover:border-white/20 dark:hover:bg-white/[0.045] sm:p-4"
     >
       <ProjectVisual project={project} />
@@ -372,7 +389,10 @@ export default function ProjectsPage() {
 
   return (
     <main className="relative isolate min-h-screen overflow-hidden bg-slate-50 text-slate-900 selection:bg-violet-500/20 dark:bg-[#080a10] dark:text-white dark:selection:bg-violet-400/30">
-      <div className="pointer-events-none fixed inset-0 -z-0 overflow-hidden" aria-hidden="true">
+      <div
+        className="pointer-events-none fixed inset-0 -z-0 overflow-hidden"
+        aria-hidden="true"
+      >
         <div className="absolute left-1/2 top-[-22rem] h-[38rem] w-[55rem] -translate-x-1/2 rounded-full bg-violet-300/30 blur-[130px] dark:bg-violet-600/[0.13]" />
         <div className="absolute right-[-15rem] top-[38rem] h-[30rem] w-[30rem] rounded-full bg-cyan-200/25 blur-[110px] dark:bg-cyan-500/[0.06]" />
         <div className="absolute inset-0 bg-[linear-gradient(rgba(15,23,42,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.035)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:linear-gradient(to_bottom,black,transparent_78%)] dark:bg-[linear-gradient(rgba(255,255,255,0.018)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.018)_1px,transparent_1px)]" />
@@ -397,7 +417,9 @@ export default function ProjectsPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-7 text-slate-600 dark:text-white/55 sm:text-lg sm:leading-8">
-            A growing collection of projects where I learn by building—from full-stack applications and thoughtful interfaces to experiments in AI and computer vision.
+            A growing collection of projects where I learn by building—from
+            full-stack applications and thoughtful interfaces to experiments in
+            AI and computer vision.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -421,15 +443,21 @@ export default function ProjectsPage() {
           <div className="mx-auto mt-12 grid max-w-lg grid-cols-3 divide-x divide-slate-200 border-y border-slate-200 py-5 dark:divide-white/10 dark:border-white/10">
             <div className="px-3">
               <p className="text-2xl font-semibold tracking-tight">10</p>
-              <p className="mt-1 text-xs text-slate-500 dark:text-white/45">Projects</p>
+              <p className="mt-1 text-xs text-slate-500 dark:text-white/45">
+                Projects
+              </p>
             </div>
             <div className="px-3">
               <p className="text-2xl font-semibold tracking-tight">Build</p>
-              <p className="mt-1 text-xs text-slate-500 dark:text-white/45">Learn by doing</p>
+              <p className="mt-1 text-xs text-slate-500 dark:text-white/45">
+                Learn by doing
+              </p>
             </div>
             <div className="px-3">
               <p className="text-2xl font-semibold tracking-tight">Improve</p>
-              <p className="mt-1 text-xs text-slate-500 dark:text-white/45">One iteration at a time</p>
+              <p className="mt-1 text-xs text-slate-500 dark:text-white/45">
+                One iteration at a time
+              </p>
             </div>
           </div>
         </motion.div>
@@ -445,7 +473,8 @@ export default function ProjectsPage() {
               </h2>
             </div>
             <p className="max-w-md text-sm leading-6 text-slate-600 dark:text-white/45">
-              Explore the idea, check the stack, and open the source. Live demos are linked where available.
+              Explore the idea, check the stack, and open the source. Live demos
+              are linked where available.
             </p>
           </div>
 
@@ -466,7 +495,9 @@ export default function ProjectsPage() {
                 Good work starts with a conversation.
               </h2>
               <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600 dark:text-white/50 sm:text-base">
-                I’m a developer who enjoys solving problems, learning new tools, and turning ideas into useful software. Have a project or opportunity in mind?
+                I’m a developer who enjoys solving problems, learning new tools,
+                and turning ideas into useful software. Have a project or
+                opportunity in mind?
               </p>
             </div>
             <a
