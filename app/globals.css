@@ -1,114 +1,161 @@
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* Dark mode is controlled by the .dark class */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* =========================================
+   1. LIGHT THEME
+   ========================================= */
 
 :root {
-  /* Semantic color tokens - Enhanced light mode */
-  --background: 0 0% 98%;
-  --foreground: 222.2 84% 4.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
+  color-scheme: light;
 
-  /* Updated primary from bright blue to deeper, more professional blue */
-  --primary: 217 91% 40%;
+  --background: 210 20% 98%;
+  --foreground: 222 40% 12%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222 40% 12%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 40% 12%;
+
+  --primary: 217 85% 42%;
   --primary-foreground: 0 0% 100%;
 
-  /* Enhanced secondary to soft warm gray for better contrast */
-  --secondary: 40 8% 94%;
-  --secondary-foreground: 222.2 84% 4.9%;
+  --secondary: 215 25% 94%;
+  --secondary-foreground: 222 40% 15%;
 
-  /* Updated accent from cyan to warm amber for light mode sophistication */
-  --accent: 35 91% 54%;
-  --accent-foreground: 0 0% 100%;
+  --accent: 36 85% 52%;
+  --accent-foreground: 222 40% 12%;
 
-  --muted: 210 40% 92%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --destructive: 0 84.2% 60.2%;
+  --muted: 215 22% 94%;
+  --muted-foreground: 218 14% 43%;
+
+  --destructive: 0 72% 48%;
   --destructive-foreground: 0 0% 100%;
-  --border: 210 33% 89%;
-  --input: 210 33% 89%;
-  --ring: 217 91% 40%;
-  --radius: 0.5rem;
 
-  /* Sidebar tokens */
+  --border: 216 20% 88%;
+  --input: 216 20% 88%;
+  --ring: 217 85% 42%;
+
+  --success: 152 60% 32%;
+  --warning: 36 85% 42%;
+
+  --radius: 0.75rem;
+
+  /* Sidebar */
   --sidebar: 0 0% 100%;
-  --sidebar-foreground: 222.2 84% 4.9%;
-  --sidebar-primary: 217 91% 40%;
+  --sidebar-foreground: 222 40% 12%;
+  --sidebar-primary: 217 85% 42%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 35 91% 54%;
-  --sidebar-accent-foreground: 0 0% 100%;
-  --sidebar-border: 210 33% 89%;
-  --sidebar-ring: 217 91% 40%;
+  --sidebar-accent: 215 25% 94%;
+  --sidebar-accent-foreground: 222 40% 15%;
+  --sidebar-border: 216 20% 88%;
+  --sidebar-ring: 217 85% 42%;
+
+  /* Portfolio-specific design tokens */
+  --portfolio-glow: 217 85% 42%;
+  --portfolio-surface: 210 20% 98%;
+  --portfolio-grid: 222 40% 12%;
+  --portfolio-shadow: 222 40% 12%;
 }
+
+/* =========================================
+   2. DARK THEME
+   ========================================= */
 
 .dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 0 0% 100%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 0 0% 100%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 0 0% 100%;
+  color-scheme: dark;
 
-  /* Updated dark mode primary to bright cyan for better contrast */
-  --primary: 188 89% 60%;
-  --primary-foreground: 222.2 84% 4.9%;
+  --background: 225 28% 7%;
+  --foreground: 220 20% 96%;
 
-  /* Secondary: Subtle dark gray */
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 0 0% 100%;
+  --card: 224 25% 10%;
+  --card-foreground: 220 20% 96%;
 
-  /* Updated dark mode accent to bright warm accent */
-  --accent: 35 95% 60%;
-  --accent-foreground: 222.2 84% 4.9%;
+  --popover: 224 25% 10%;
+  --popover-foreground: 220 20% 96%;
 
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --destructive: 0 62.8% 30.6%;
+  --primary: 188 85% 58%;
+  --primary-foreground: 225 28% 8%;
+
+  --secondary: 222 22% 15%;
+  --secondary-foreground: 220 20% 94%;
+
+  --accent: 36 90% 61%;
+  --accent-foreground: 225 28% 8%;
+
+  --muted: 222 22% 15%;
+  --muted-foreground: 218 15% 68%;
+
+  --destructive: 0 65% 56%;
   --destructive-foreground: 0 0% 100%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 188 89% 60%;
 
-  /* Sidebar tokens */
-  --sidebar: 222.2 84% 4.9%;
-  --sidebar-foreground: 0 0% 100%;
-  --sidebar-primary: 188 89% 60%;
-  --sidebar-primary-foreground: 222.2 84% 4.9%;
-  --sidebar-accent: 35 95% 60%;
-  --sidebar-accent-foreground: 222.2 84% 4.9%;
-  --sidebar-border: 217.2 32.6% 17.5%;
-  --sidebar-ring: 188 89% 60%;
+  --border: 222 20% 19%;
+  --input: 222 20% 19%;
+  --ring: 188 85% 58%;
+
+  --success: 152 60% 58%;
+  --warning: 36 90% 65%;
+
+  /* Sidebar */
+  --sidebar: 225 28% 8%;
+  --sidebar-foreground: 220 20% 96%;
+  --sidebar-primary: 188 85% 58%;
+  --sidebar-primary-foreground: 225 28% 8%;
+  --sidebar-accent: 222 22% 15%;
+  --sidebar-accent-foreground: 220 20% 94%;
+  --sidebar-border: 222 20% 19%;
+  --sidebar-ring: 188 85% 58%;
+
+  /* Portfolio-specific design tokens */
+  --portfolio-glow: 188 85% 58%;
+  --portfolio-surface: 225 28% 7%;
+  --portfolio-grid: 220 20% 96%;
+  --portfolio-shadow: 0 0% 0%;
 }
 
+/* =========================================
+   3. TAILWIND CSS 4 THEME MAPPING
+   ========================================= */
+
 @theme inline {
-  --font-sans: "Geist", "Geist Fallback";
-  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  --font-sans: "Geist", "Geist Fallback", sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", monospace;
+
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
+
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
+
   --color-popover: hsl(var(--popover));
   --color-popover-foreground: hsl(var(--popover-foreground));
+
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
+
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
+
   --color-accent: hsl(var(--accent));
   --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
   --color-destructive: hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
+
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-success: hsl(var(--success));
+  --color-warning: hsl(var(--warning));
+
   --color-sidebar: hsl(var(--sidebar));
   --color-sidebar-foreground: hsl(var(--sidebar-foreground));
   --color-sidebar-primary: hsl(var(--sidebar-primary));
@@ -117,65 +164,217 @@
   --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
   --color-sidebar-border: hsl(var(--sidebar-border));
   --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  --color-portfolio-glow: hsl(var(--portfolio-glow));
+  --color-portfolio-surface: hsl(var(--portfolio-surface));
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 12px);
 }
+
+/* =========================================
+   4. GLOBAL BASE STYLES
+   ========================================= */
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    @apply border-border;
   }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
+    min-height: 100vh;
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.2);
+    color: hsl(var(--foreground));
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 3px;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+  }
+
+  a {
+    text-underline-offset: 4px;
+  }
+
+  ::placeholder {
+    color: hsl(var(--muted-foreground));
+    opacity: 0.8;
   }
 }
 
-/* Custom animations for portfolio */
+/* =========================================
+   5. PORTFOLIO ANIMATIONS
+   ========================================= */
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 16px hsl(var(--portfolio-glow) / 0.08);
+  }
+
+  50% {
+    box-shadow: 0 0 28px hsl(var(--portfolio-glow) / 0.18);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @layer utilities {
   .animate-float {
-    animation: float 3s ease-in-out infinite;
+    animation: float 5s ease-in-out infinite;
   }
 
   .animate-glow {
-    animation: glow 2s ease-in-out infinite;
+    animation: glow 3s ease-in-out infinite;
   }
 
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
+  .animate-fade-up {
+    animation: fade-up 0.6s ease-out both;
   }
 
-  @keyframes glow {
-    0%,
-    100% {
-      box-shadow: 0 0 20px rgba(188, 226, 255, 0.3);
-    }
-    50% {
-      box-shadow: 0 0 40px rgba(188, 226, 255, 0.6);
-    }
-  }
-
+  /* Theme-aware glass surface */
   .glassmorphic {
-    @apply bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10;
+    background: hsl(var(--card) / 0.72);
+    border: 1px solid hsl(var(--border) / 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 
+  /* Subtle portfolio grid */
+  .portfolio-grid {
+    background-image:
+      linear-gradient(
+        to right,
+        hsl(var(--portfolio-grid) / 0.045) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        hsl(var(--portfolio-grid) / 0.045) 1px,
+        transparent 1px
+      );
+    background-size: 40px 40px;
+  }
+
+  /* Theme-aware accent border */
   .glow-border {
-    @apply relative border border-accent/30 rounded-lg;
+    position: relative;
+    isolation: isolate;
+    border: 1px solid hsl(var(--portfolio-glow) / 0.25);
+    border-radius: var(--radius);
   }
 
   .glow-border::before {
-    content: "";
     position: absolute;
-    inset: 0;
+    z-index: -1;
+    inset: -1px;
     border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(45deg, transparent, rgba(188, 226, 255, 0.5), transparent);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0.5;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--portfolio-glow) / 0.16),
+      transparent 55%,
+      hsl(var(--accent) / 0.12)
+    );
+    content: "";
+    pointer-events: none;
+  }
+
+  /* Consistent surface elevation */
+  .portfolio-card {
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius-xl);
+    background: hsl(var(--card));
+    box-shadow: 0 4px 20px hsl(var(--portfolio-shadow) / 0.04);
+    transition:
+      border-color 200ms ease,
+      box-shadow 200ms ease,
+      transform 200ms ease;
+  }
+
+  @media (hover: hover) {
+    .portfolio-card:hover {
+      border-color: hsl(var(--portfolio-glow) / 0.4);
+      box-shadow: 0 12px 30px hsl(var(--portfolio-shadow) / 0.08);
+      transform: translateY(-3px);
+    }
+  }
+}
+
+/* =========================================
+   6. ACCESSIBILITY
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
