@@ -20,6 +20,7 @@ import {
   Workflow,
 } from "lucide-react";
 
+
 type Project = {
   id: string;
   number: string;
@@ -32,6 +33,7 @@ type Project = {
   kind:
     | "portfolio"
     | "pipeline"
+    | "video"
     | "resume"
     | "classroom"
     | "commerce"
@@ -59,6 +61,7 @@ const projects: Project[] = [
     accent: "from-violet-500/30 via-fuchsia-500/10 to-slate-950",
     label: "PERSONAL WEBSITE",
   },
+
   {
     id: "pipeline-dag-analyzer",
     number: "02",
@@ -73,6 +76,32 @@ const projects: Project[] = [
     accent: "from-cyan-500/25 via-blue-500/10 to-slate-950",
     label: "WORKFLOW VISUALIZATION",
   },
+
+{
+  id: "connect-sphere",
+  number: "03",
+  title: "ConnectSphere",
+  tagline: "Connect face-to-face, from anywhere.",
+  description:
+    "A real-time video conferencing platform with user authentication, meeting rooms, live audio and video communication, and real-time chat powered by WebRTC and Socket.IO.",
+  tech: [
+    "React",
+    "Vite",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "Socket.IO",
+    "WebRTC",
+  ],
+  github:
+    "https://github.com/ShobhitGupta1512/ConnectSphere",
+  liveDemo:
+    "https://connect-sphere-iota-ten.vercel.app/",
+  kind: "video",
+  accent: "from-violet-500/25 via-fuchsia-500/10 to-slate-950",
+  label: "REAL-TIME COMMUNICATION",
+},
+
   {
     id: "ai-resume-analyzer",
     number: "03",
