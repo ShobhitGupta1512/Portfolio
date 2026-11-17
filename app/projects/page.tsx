@@ -215,6 +215,7 @@ function ProjectVisual({ project }: { project: Project }) {
   const iconMap = {
     portfolio: <Code2 className={iconClass} />,
     pipeline: <Workflow className={iconClass} />,
+    video: <AudioLines className={iconClass} />,
     resume: <BriefcaseBusiness className={iconClass} />,
     classroom: <UsersRound className={iconClass} />,
     commerce: <ShoppingBag className={iconClass} />,
